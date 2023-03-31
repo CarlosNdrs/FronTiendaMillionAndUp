@@ -1,0 +1,19 @@
+<nav class="navbar bg-dark sticky-top bg-body-tertiary" data-bs-theme="dark">
+  <div class="container">
+    <div class="col-10">
+      <a class="navbar-brand" href="#">
+        <img src="assets/images/AwesomeLogoTn.png" alt="Awesome Store">
+      </a>
+    </div>
+    <div class="col-2 d-flex justify-content-end">
+      <button type="button" class="btn btn-outline-dark position-relative" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" *ngIf="showIconCart()">
+        <i class="fa-solid fa-cart-shopping fa-lg" style="color: #ffffff;"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger badgeText">
+          {{totalNumberProducts()}}
+          <span class="visually-hidden">Products in cart</span>
+        </span>
+      </button>
+    </div>
+
+  </div>
+</nav>

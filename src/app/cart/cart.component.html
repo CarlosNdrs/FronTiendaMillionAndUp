@@ -1,0 +1,37 @@
+
+  <div class="offcanvas offcanvas-top z-0 position-absolute" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel"><i class="fa-solid fa-cart-shopping"></i> Shopping Cart</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+          <div class="row mt-1" *ngFor="let prod of cartStore | async">
+            <div class="col-3">
+              {{prod.title}}
+            </div>
+            <div class="col-1">
+              {{prod.price | currency: 'USD'}}
+            </div>
+            <div class="col-1 d-flex justify-content-center align-items-center">
+              <i class="fa-solid fa-minus" role="button" (click)="updateCart('del', prod.id, prod.store)"></i>
+              <span class="border border-2 border-dark rounded border-opacity-10 px-2 mx-2">{{prod.quantity}}</span>
+              <i class="fa-solid fa-plus" role="button" (click)="updateCart('add', prod.id, prod.store)"></i>
+            </div>
+            <div class="col-1">
+              {{prod.price * prod.quantity | currency: 'USD'}}
+            </div>
+            <div class="col-6">
+              <i class="fa-solid fa-trash" role="button" (click)="deleteProduct(prod.id)"></i>
+            </div>
+          </div>
+          <div class="row justify-content-between mt-3">
+            <div class="col d-flex">
+              <h4>Total: {{calcTotalCart() | currency: 'USD'}}</h4>
+              <button class="btn btn-success mx-3 " (click)="checkout()" *ngIf="showCheckOutButton()">Checkout</button>
+              <button class="btn btn-success mx-3 " disabled *ngIf="!showCheckOutButton()">Checkout</button>
+            </div>
+
+          </div>
+    </div>
+  </div>
+

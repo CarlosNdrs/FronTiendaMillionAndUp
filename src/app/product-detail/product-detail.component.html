@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="row position-relative">
+    <div class="toast-container p-3 top-0 end-0">
+      <ngb-toast *ngFor="let notification of notifications"
+                [autohide]="true"
+                [class]="classSuccessToast"
+                [delay]="1500"
+                [animation]="true"
+                (hidden)="removeNotification(notification)"
+                >
+                {{notification.text}}
+      </ngb-toast>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-6 ">
+      <div class="row">
+        <div class="col-12 d-flex container-carousel align-items-center justify-content-center">
+        <!-- <img class="img-detail mx-auto d-block" src="{{mainImage}}"> -->
+        <div id="carouselExample" class="carousel carousel-dark slide">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{{mainImage}}" class="d-block m-auto img-detail" alt="...">
+            </div>
+            <div class="carousel-item" *ngFor="let image of product.images">
+              <img src="{{image}}" class="d-block m-auto img-detail" alt="...">
+            </div>
+          </div>
+          <button *ngIf="product.images" class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button *ngIf="product.images" class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="product.images">
+        <div class="col-12 d-flex justify-content-center">
+          <div class="border border-3 m-3 d-flex align-items-center">
+            <img src="{{mainImage}}" class="d-block m-auto img-detail-thumbnail">
+          </div>
+          <div class="border border-3 m-3 d-flex align-items-center" *ngFor="let image of product.images" >
+            <img src="{{image}}" class="d-block m-auto img-detail-thumbnail">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="mt-3">
+        <h2>{{product.title}}</h2>
+      </div>
+      <div class="d-flex align-items-center">
+        Rate: {{product.rating.rate}} &nbsp;
+        <i *ngFor="let star of yellowStars" class="fa-solid fa-star" style="color: #e4bf07;"></i>
+        <i *ngFor="let star of grayStars" class="fa-solid fa-star" style="color: #dadad8;"></i> &nbsp;
+        <div class="align-middle" *ngIf="product.rating.count"> | {{reviewsText}}</div>
+      </div>
+      <div class="mt-5">
+        <p>{{product.description}}</p>
+      </div>
+      <div>
+        <span class="badge text-bg-primary">{{product.category}}</span>
+      </div>
+      <div class="mt-5">
+        <p class="h5">{{product.price  | currency: 'USD'}} </p>
+      </div>
+      <div *ngIf="quantityAvailable() == 0">
+        Out of Stock
+      </div>
+      <div *ngIf="quantityAvailable() > 0">
+        Qty available: {{quantityAvailable()}}
+      </div>
+      <div *ngIf="quantityAvailable() == 0" class="mt-3 d-flex">
+        <div class="col-2 d-flex">
+          <select class="form-select" aria-label="Default select example" disabled>
+            <option value="0">0</option>
+          </select>
+        </div>
+        <div class="col-10 ms-3">
+          <button type="button" class="btn btn-success" disabled>Add to Cart</button>
+        </div>
+      </div>
+      <div *ngIf="quantityAvailable() > 0" class="row mt-3 d-flex">
+        <form [formGroup]="formBuy" (ngSubmit)="addToCart(product)" class="d-flex">
+          <div class="col-2">
+            <select class="form-select" aria-label="Default select example" formControlName="quantity">
+              <option *ngFor="let item of qtyOptions" [ngValue]=item >{{item}}</option>
+            </select>
+          </div>
+          <div class="col-10 ms-3">
+            <button class="btn btn-success">Add to Cart</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <app-cart></app-cart>
+  <!-- <div *ngFor="let notification item of notifications">{{notification}}</div> -->
+</div>
